@@ -24,24 +24,24 @@ def convert_to_ela_image(path, quality):
     return ela_image
 
 
-def prepare_image(image_path, image_size):
-    return np.array(convert_to_ela_image(image_path, 90).resize(image_size))
+def prepare_image(image_path, quality=90, image_size=None):
+    if image_size is None:
+        return np.array(convert_to_ela_image(image_path, quality))
+    else:
+        return np.array(convert_to_ela_image(image_path, quality).resize(image_size))
 
 
-def ela_pre_process(original_dir, tampered_dir, dataset_dir, image_size):
+def ela_pre_process(original_dir, ela_processed_dir, image_size):
+    supported_formats = ['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'tif']
 
+    if not os.path.exists(ela_processed_dir):
+        os.makedirs(ela_processed_dir)
     original_images = os.listdir(original_dir)
 
     for image in original_images:
+        if image.split('.')[-1].lower() not in supported_formats:
+            continue
         ela_image = prepare_image(os.path.join(
             original_dir, image), image_size)
         Image.fromarray(ela_image).save(os.path.join(
-            dataset_dir, '..', 'ELA_CASIA1', 'authentic', image))
-
-    tampered_images = os.listdir(tampered_dir)
-
-    for image in tampered_images:
-        ela_image = prepare_image(os.path.join(
-            tampered_dir, image), image_size)
-        Image.fromarray(ela_image).save(os.path.join(
-            dataset_dir, '..', 'ELA_CASIA1', 'tampered', image))
+            ela_processed_dir, image))

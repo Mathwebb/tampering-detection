@@ -7,7 +7,8 @@ import random
 folder_path = '../data_sets/xrays/authentic'
 
 # Get a list of all files in the folder
-image_files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+image_files = [f for f in os.listdir(
+    folder_path) if os.path.isfile(os.path.join(folder_path, f))]
 
 # Loop through the image files and read and modify each one
 for image_file in image_files:
@@ -15,10 +16,10 @@ for image_file in image_files:
     if image_file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
         # Construct the full path to the image
         image_path = os.path.join(folder_path, image_file)
-        
+
         # Read the image using OpenCV
         image = cv2.imread(image_path)
-        
+
         # Get the dimensions of the image
         height, width, _ = image.shape
 
@@ -27,7 +28,7 @@ for image_file in image_files:
         random_y = random.randint(200, height - 200)
 
         # Generate a random color for the spot (random BGR values)
-        spot_color = (255,255,255)
+        spot_color = (255, 255, 255)
 
         # Define the size of the spot (randomly between 5 and 20 pixels)
         spot_size = random.randint(30, 100)
@@ -39,14 +40,17 @@ for image_file in image_files:
         if shape_choice == 0:
             cv2.circle(image, (random_x, random_y), spot_size, spot_color, -1)
         elif shape_choice == 1:
-            cv2.rectangle(image, (random_x, random_y), (random_x + spot_size, random_y + spot_size), spot_color, -1)
+            cv2.rectangle(image, (random_x, random_y), (random_x +
+                          spot_size, random_y + spot_size), spot_color, -1)
         else:
             random_width = random.randint(20, 50)
             random_height = random.randint(20, 50)
-            cv2.rectangle(image, (random_x, random_y), (random_x + random_width, random_y + random_height), spot_color, -1)
-        
+            cv2.rectangle(image, (random_x, random_y), (random_x +
+                          random_width, random_y + random_height), spot_color, -1)
+
         # Save the modified image (you can save it with a different name)
-        modified_image_path = os.path.join(folder_path, '..', 'tampered', 'modified_' + image_file)
+        modified_image_path = os.path.join(
+            folder_path, '..', 'tampered', 'modified_' + image_file)
         cv2.imwrite(modified_image_path, image)
 
         # Optionally, display the modified image (you can uncomment these lines)
