@@ -39,7 +39,8 @@ def ela_pre_process(original_dir, ela_processed_dir, image_size):
     original_images = os.listdir(original_dir)
 
     for image in original_images:
-        if image.split('.')[-1].lower() not in supported_formats:
+        image_name, image_ext = os.path.splitext(image)
+        if image_ext not in supported_formats:
             continue
         ela_image = prepare_image(os.path.join(
             original_dir, image), image_size)
