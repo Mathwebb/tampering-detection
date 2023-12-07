@@ -52,8 +52,3 @@ for image_file in image_files:
         modified_image_path = os.path.join(
             folder_path, '..', 'tampered', 'modified_' + image_file)
         cv2.imwrite(modified_image_path, image)
-
-        # Optionally, display the modified image (you can uncomment these lines)
-        # cv2.imshow('Modified Image', image)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
