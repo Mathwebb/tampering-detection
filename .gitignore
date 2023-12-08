@@ -34,7 +34,8 @@ var/
 .installed.cfg
 *.egg
 
-#Project Specific
+# Project Specific
 models/*
-training_data/*
+training_data/
+data_sets/*
 *.jpg
